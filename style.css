@@ -67,7 +67,7 @@ section h2 { margin: 0 0 14px; font-size: 14px; letter-spacing: 0.08em; color: v
 .timeline .what::before { content: ""; position: absolute; left: -4px; top: 0.65em; width: 7px; height: 7px; border-radius: 50%; background: var(--overlay); }
 .timeline li.now .what::before { background: var(--green); }
 .timeline .org { color: var(--text); }
-/* 期間（2023-10 – 2026-09）は日付の列に収まらないので、「–」のあとで折り返して 2 行にする（列の幅は記事・成果の欄とそろえたまま） */
+/* 期間（2023.10 – 2026.09）は日付の列に収まらないので、「–」のあとで折り返して 2 行にする（列の幅は記事・成果の欄とそろえたまま） */
 .timeline .when { white-space: normal; }
 .sub { display: block; color: var(--subtext); font-size: 14px; }
 .when { font: 13px var(--mono); color: var(--overlay); font-variant-numeric: tabular-nums; white-space: nowrap; }
