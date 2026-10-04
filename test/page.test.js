@@ -19,9 +19,13 @@ before(async () => {
 });
 after(async () => { await browser?.close(); await srv?.close(); });
 
-// ページを開く。読み込んだものの応答と、コンソールのエラーを集める
+// ページを開く。読み込んだものの応答と、コンソールのエラーを集める。
+// テストごとに保存領域（localStorage）を分け、前のテストで選んだ言語などが漏れないようにする
 async function open({ js = true, lang = null, width = 1280 } = {}) {
-  const page = await browser.newPage();
+  const context = await browser.createBrowserContext();
+  const page = await context.newPage();
+  const close = page.close.bind(page);
+  page.close = async () => { await close(); await context.close(); };
   const errors = [], responses = [], failed = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
@@ -31,7 +35,7 @@ async function open({ js = true, lang = null, width = 1280 } = {}) {
   await page.setViewport({ width, height: 800 });
   if (lang) await page.evaluateOnNewDocument((l) => { try { localStorage.setItem("lang", l); } catch (e) {} }, lang);
   await page.goto(srv.url, { waitUntil: "networkidle0" });
-  return { page, errors, responses, failed };
+  return { page, context, errors, responses, failed };
 }
 
 describe("単独の HTML としての体裁", () => {
@@ -94,7 +98,7 @@ describe("読み込みとリンク", () => {
   test("外へのリンクはすべて https で、新しいタブで開くものは rel=noopener を持つ", async () => {
     const { page } = await open();
     const links = await page.evaluate(() => [...document.querySelectorAll("a[href]")].map((a) => ({ href: a.href, target: a.target, rel: a.rel })));
-    const ext = links.filter((l) => !l.href.startsWith(location.origin) && !l.href.startsWith("mailto:"));
+    const ext = links.filter((l) => !l.href.startsWith(srv.url) && !l.href.startsWith("mailto:"));
     assert.ok(ext.length > 0);
     for (const l of ext) {
       assert.ok(l.href.startsWith("https://"), `https でない: ${l.href}`);
@@ -114,8 +118,8 @@ describe("読み込みとリンク", () => {
 
 describe("言語の切り替え", () => {
   test("EN を押すと英語だけになり、開き直しても英語のまま", async () => {
-    const { page } = await open({ lang: "ja" });
-    const shown = () => page.evaluate(() => {
+    const { page, context } = await open({ lang: "ja" });
+    const shown = (p = page) => p.evaluate(() => {
       const vis = (sel) => [...document.querySelectorAll(sel)].filter((e) => e.offsetParent !== null).length;
       return { lang: document.documentElement.lang, ja: vis('.page [lang="ja"]'), en: vis('.page [lang="en"]') };
     });
@@ -125,8 +129,11 @@ describe("言語の切り替え", () => {
     s = await shown();
     assert.equal(s.lang, "en"); assert.equal(s.ja, 0); assert.ok(s.en > 0);
     assert.equal(await page.$eval('.langsw button[data-l="en"]', (b) => b.getAttribute("aria-pressed")), "true");
-    await page.reload({ waitUntil: "networkidle0" });
-    assert.equal(await page.evaluate(() => document.documentElement.lang), "en");
+    // 同じ保存領域で、最初の言語を指定せずに開き直す
+    const again = await context.newPage();
+    await again.goto(srv.url, { waitUntil: "networkidle0" });
+    s = await shown(again);
+    assert.equal(s.lang, "en"); assert.equal(s.ja, 0);
     await page.close();
   });
 });

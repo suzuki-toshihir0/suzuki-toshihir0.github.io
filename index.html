@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Toshihiro Suzuki</title>
+<meta name="description" content="Toshihiro Suzuki (鈴木 聡宏) — Spacecraft Engineer, Guidance, Navigation &amp; Control.">
+<meta name="theme-color" content="#1e1e2e">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Toshihiro Suzuki">
+<meta property="og:description" content="Spacecraft Engineer — Guidance, Navigation &amp; Control.">
+<meta property="og:url" content="https://suzuki-toshihir0.github.io/">
+<meta property="og:image" content="https://suzuki-toshihir0.github.io/avatar.png">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="avatar.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<script>
+  // 最初の言語: 前に選んだもの、無ければブラウザの言語（日本語なら JA、それ以外は EN）。描く前に決めてちらつきを防ぐ
+  (() => {
+    let l = null;
+    try { l = localStorage.getItem("lang"); } catch (e) {}
+    document.documentElement.lang = l === "ja" || l === "en" ? l : ((navigator.language || "").toLowerCase().startsWith("ja") ? "ja" : "en");
+  })();
+</script>
+<script type="module" src="js/art.js"></script>
+<script type="module" src="js/planner.js"></script>
+<script type="module" src="js/lang.js"></script>
+</head>
+<body>
+<canvas id="art" aria-hidden="true"></canvas>
+
+<div class="langsw" role="group" aria-label="Language"><button type="button" data-l="ja" aria-pressed="false">JA</button><span>/</span><button type="button" data-l="en" aria-pressed="false">EN</button></div>
+
+
+<main class="page">
+  <header class="me">
+    <img class="avatar" src="avatar.png" alt="Toshihiro Suzuki のアイコン" width="88" height="88">
+    <div>
+      <h1><button type="button" class="caret" id="caret" aria-expanded="false" aria-controls="mix" aria-label="隠しのパネルを開く" title="?">❯</button>Toshihiro Suzuki</h1>
+      <div class="mix" id="mix" hidden role="region" aria-label="カメラを向ける方向の指示" tabindex="-1">
+        <div class="bar"><span class="cmd-line"><span class="p-car">❯</span> planner</span><span class="title"></span><button type="button" id="mix-close" aria-label="閉じる">✕</button></div>
+        <div class="panes">
+        <div class="pane target"><span class="pane-title">target</span><div class="head" id="mix-head"></div><div class="cols" id="mix-cols"></div></div>
+        <div class="pane hist"><span class="pane-title">rw speed [rpm]</span><div class="hist-read" id="hist-read"></div><canvas id="hist" aria-label="リアクションホイールの回転数の時間履歴（直近 3 分）"></canvas></div>
+        </div>
+      </div>
+      <div class="handle"><a href="https://github.com/suzuki-toshihir0" aria-label="GitHub の suzuki-toshihir0"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.766 11.328c-2.063-.25-3.516-1.734-3.516-3.656 0-.781.281-1.625.75-2.188-.203-.515-.172-1.609.063-2.062.625-.078 1.468.25 1.968.703.594-.187 1.219-.281 1.985-.281.765 0 1.39.094 1.953.265.484-.437 1.344-.765 1.969-.687.218.422.25 1.515.046 2.047.5.593.766 1.39.766 2.203 0 1.922-1.453 3.375-3.547 3.64.531.344.89 1.094.89 1.954v1.625c0 .468.391.734.86.547C13.781 14.359 16 11.53 16 8.03 16 3.61 12.406 0 7.984 0 3.563 0 0 3.61 0 8.031a7.88 7.88 0 0 0 5.172 7.422c.422.156.828-.125.828-.547v-1.25c-.219.094-.5.156-.75.156-1.031 0-1.64-.562-2.078-1.609-.172-.422-.36-.672-.719-.719-.187-.015-.25-.093-.25-.187 0-.188.313-.328.625-.328.453 0 .844.281 1.25.86.313.452.64.655 1.031.655s.641-.14 1-.5c.266-.265.47-.5.657-.656"/></svg>@suzuki-toshihir0</a></div>
+    </div>
+    <p>Spacecraft Engineer</p>
+    <dl class="fetch">
+      <dt>field</dt><dd>Guidance, Navigation &amp; Control</dd>
+      <dt>lang</dt><dd>Rust · C · C++ · Python · MATLAB · Simulink</dd>
+      <dt>os</dt><dd>Arch Linux · NixOS</dd>
+    </dl>
+  </header>
+
+  <section>
+    <h2><span lang="ja">記事</span><span lang="en">Posts</span></h2>
+    <ul class="posts">
+      <li><time>2026-09-30</time><span lang="ja">博士号を取得しました！</span><span lang="en">Received my Ph.D.!</span></li>
+    </ul>
+  </section>
+
+  <section id="career">
+    <h2><span lang="ja">経歴</span><span lang="en">Career</span></h2>
+    <ol class="timeline">
+      <li class="now"><span class="when">2021 –</span><div class="what"><span class="org"><span lang="ja">株式会社アークエッジ・スペース</span><span lang="en">ArkEdge Space Inc.</span></span></div></li>
+      <li><span class="when">2023 – 2026</span><div class="what"><span class="org"><span lang="ja">東京大学 大学院工学系研究科 航空宇宙工学専攻</span><span lang="en">The University of Tokyo, Department of Aeronautics and Astronautics, Graduate School of Engineering</span></span><span class="sub"><span lang="ja">博士課程　博士（工学）</span><span lang="en">Doctoral Program — Ph.D. (Engineering)</span></span></div></li>
+      <li><span class="when">2021 – 2023</span><div class="what"><span class="org"><span lang="ja">東京大学 大学院工学系研究科 航空宇宙工学専攻</span><span lang="en">The University of Tokyo, Department of Aeronautics and Astronautics, Graduate School of Engineering</span></span><span class="sub"><span lang="ja">修士課程　修士（工学）</span><span lang="en">Master's Program — M.Eng.</span></span></div></li>
+      <li><span class="when">2017 – 2021</span><div class="what"><span class="org"><span lang="ja">東京大学 工学部 航空宇宙工学科</span><span lang="en">The University of Tokyo, Department of Aeronautics and Astronautics, Faculty of Engineering</span></span><span class="sub"><span lang="ja">学士（工学）</span><span lang="en">B.Eng.</span></span></div></li>
+    </ol>
+  </section>
+
+  <section id="works">
+    <h2><span lang="ja">成果</span><span lang="en">Publications</span></h2>
+    <h3><span lang="ja">論文誌</span><span lang="en">Journal Papers</span></h3>
+    <ol class="items">
+      <li><span class="when">2026</span><div>T. Sasaki, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (11th author)</span>. <span class="title">“Autonomous flyby operations for Comet Interceptor Probe B1: Guidance, navigation, and control strategy”</span><span class="venue"> — Acta Astronautica</span><span class="links"><a href="https://doi.org/10.1016/j.actaastro.2026.09.005">DOI</a></span></div></li>
+      <li><span class="when">2025</span><div>H. Sekine, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (5th author)</span>. <span class="title">“Angular momentum management strategies for deep space CubeSats and their application to EQUULEUS”</span><span class="venue"> — Advances in Space Research</span><span class="links"><a href="https://doi.org/10.1016/j.asr.2025.07.084">DOI</a></span></div></li>
+      <li><span class="when">2025</span><div>H. Sekine, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (4th author)</span>. <span class="title">“Development of Software-In-the-Loop Simulator and Hardware-In-the-Loop Simulator of AOCS Module for CubeSats”</span><span class="venue"> — Journal of Evolving Space Activities</span><span class="links"><a href="https://doi.org/10.57350/jesa.228">DOI</a></span></div></li>
+      <li><span class="when">2024</span><div><span class="me-name">T. Suzuki</span> et al. <span class="title">“Magnetic Test Result of AOCS Module and 6U CubeSat”</span><span class="venue"> — Journal of Evolving Space Activities</span><span class="links"><a href="https://doi.org/10.57350/jesa.219">DOI</a></span></div></li>
+      <li><span class="when">2023</span><div>S. Ikari, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (3rd author)</span>. <span class="title">“Development of Compact and Highly Capable Integrated AOCS Module for CubeSats”</span><span class="venue"> — Journal of Evolving Space Activities</span><span class="links"><a href="https://doi.org/10.57350/jesa.63">DOI</a></span></div></li>
+      <li><span class="when">2023</span><div>T. Hosonuma, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (3rd author)</span>. <span class="title">“Experiment/Simulation-Based Assessment of Microvibration-Induced Pointing Error in 6U Class CubeSat Missions”</span><span class="venue"> — Journal of Evolving Space Activities</span><span class="links"><a href="https://doi.org/10.57350/jesa.44">DOI</a></span></div></li>
+    </ol>
+
+    <h3><span lang="ja">国際会議</span><span lang="en">International Conferences</span></h3>
+    <ol class="items">
+      <li><span class="when">2023</span><div><span class="me-name">T. Suzuki</span> et al. <span class="title">“Magnetic Test Result of AOCS Module and 6U CubeSat”</span><span class="venue"> — 34th ISTS, Kurume</span></div></li>
+      <li><span class="when">2022</span><div><span class="me-name">T. Suzuki</span>, S. Ikari, M. Musha, S. Nakasuka. <span class="title">“Study on The Relative Position Control Method for Formation Flying Satellites Using Acousto-Optic Deflector”</span><span class="venue"> — 33rd ISTS, Beppu (online)</span></div></li>
+    </ol>
+    <details class="more">
+      <summary><span lang="ja">共著 10 件</span><span lang="en">10 co-authored</span></summary>
+      <ol class="items">
+        <li><span class="when">2025</span><div>T. Sasaki, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (11th author)</span>. <span class="title">“Autonomous Flyby Operations for Comet Interceptor Probe B1: Guidance, Navigation, and Control Strategy”</span><span class="venue"> — IAC 2025, Sydney</span><span class="links"><a href="https://doi.org/10.52202/083086-0021">DOI</a></span></div></li>
+        <li><span class="when">2024</span><div>R. Nakamura, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (5th author)</span>. <span class="title">“Adaptive On-Orbit Software Reconfiguration of SPHERE-1 EYE AOCS Hardware Failure”</span><span class="venue"> — IAC 2024, Milan</span><span class="links"><a href="https://doi.org/10.52202/078365-0032">DOI</a></span></div></li>
+        <li><span class="when">2024</span><div>H. Sekine, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (5th author)</span>. <span class="title">“Attitude Planning for a Time Delay Integral Mission of a 6U CubeSat ONGLAISAT”</span><span class="venue"> — IAC 2024, Milan</span><span class="links"><a href="https://doi.org/10.52202/078365-0130">DOI</a></span></div></li>
+        <li><span class="when">2024</span><div>S. Ikari, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (2nd author)</span>. <span class="title">“Open-Source Software Suite for Effective Spacecraft Research and Development: Introductions and Case Studies”</span><span class="venue"> — IAC 2024, Milan</span><span class="links"><a href="https://doi.org/10.52202/078372-0087">DOI</a></span></div></li>
+        <li><span class="when">2023</span><div>H. Sekine, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (5th author)</span>. <span class="title">“Initial Operation Results of EQUULEUS ADCS: Wheel Unloading Strategies for a Deep Space 6U CubeSat”</span><span class="venue"> — IAC 2023, Baku</span><span class="links"><a href="https://dl.iafastro.directory/event/IAC-2023/paper/76180/">Link</a></span></div></li>
+        <li><span class="when">2023</span><div>I. Moriai, …, <span class="me-name">T. Suzuki</span> et al. <span class="title">“On-orbit performance of AQUARIUS: world’s first successful water propulsion system in deep space”</span><span class="venue"> — IAC 2023, Baku</span><span class="links"><a href="https://dl.iafastro.directory/event/IAC-2023/paper/78183/">Link</a></span></div></li>
+        <li><span class="when">2023</span><div>H. Sekine, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (4th author)</span>. <span class="title">“Development of Software-In-the-Loop Simulator and Hardware-In-the-Loop Simulator of AOCS Module for CubeSats”</span><span class="venue"> — 34th ISTS, Kurume</span></div></li>
+        <li><span class="when">2022</span><div>T. Hosonuma, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (3rd author)</span>. <span class="title">“Experiment/Simulation-Based Assessment of Microvibration-Induced Pointing Error in 6U Class CubeSat Missions”</span><span class="venue"> — 33rd ISTS, Beppu (online)</span></div></li>
+        <li><span class="when">2022</span><div>S. Ikari, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (4th author)</span>. <span class="title">“Development of Compact and Highly Capable Integrated AOCS Module for CubeSats”</span><span class="venue"> — 33rd ISTS, Beppu (online)</span></div></li>
+        <li><span class="when">2022</span><div>R. Suzumoto, …, <span class="me-name">T. Suzuki</span> et al.<span class="pos"> (10th author)</span>. <span class="title">“Open-Source Software Suite for Small Satellites: C2A, S2E, and WINGS”</span><span class="venue"> — SmallSat 2022 (poster), Logan</span><span class="links"><a href="https://digitalcommons.usu.edu/smallsat/2022/all2022/194/">Link</a></span></div></li>
+      </ol>
+    </details>
+
+    <h3><span lang="ja">国内学会</span><span lang="en">Domestic Conferences</span></h3>
+    <ol class="items">
+      <li><span class="when">2025</span><div><span class="me-name">鈴木 聡宏</span>, 五十里 哲, 中須賀 真一. <span class="title">「高精度編隊飛行に向けた逐次的センサ連携手法」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第69回, 3L16）</span><span lang="en">Space Sciences and Technology Conference (69th, 3L16), in Japanese</span></span></div></li>
+      <li><span class="when">2024</span><div><span class="me-name">鈴木 聡宏</span>, 五十里 哲, 中須賀 真一. <span class="title">「編隊飛行衛星間の逐次的なセンサ連携による高精度相対位置計測・制御に関する研究」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第68回, 4F15）</span><span lang="en">Space Sciences and Technology Conference (68th, 4F15), in Japanese</span></span></div></li>
+      <li><span class="when">2023</span><div><span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al</span>. <span class="title">「CubeSat用国産AOCSモジュールの研究開発」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第67回, 2G11）</span><span lang="en">Space Sciences and Technology Conference (67th, 2G11), in Japanese</span></span></div></li>
+      <li><span class="when">2023</span><div><span class="me-name">鈴木 聡宏</span>, 五十里 哲, 武者 満, 中須賀 真一. <span class="title">「音響光学素子を利用した編隊飛行衛星間相対位置・計測手法に関する実験と検証」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第67回, 3F16）</span><span lang="en">Space Sciences and Technology Conference (67th, 3F16), in Japanese</span></span></div></li>
+      <li><span class="when">2022</span><div><span class="me-name">鈴木 聡宏</span>, 五十里 哲, 武者 満, 中須賀 真一. <span class="title">「音響光学偏向子を利用した編隊飛行衛星間の高精度相対位置計測・制御」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第66回, 1E18）</span><span lang="en">Space Sciences and Technology Conference (66th, 1E18), in Japanese</span></span></div></li>
+      <li><span class="when">2021</span><div><span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al</span>. <span class="title">「超小型衛星FFによる多重像X線干渉計ミッションMIXIM-SFの概念設計」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第65回, 2K07）</span><span lang="en">Space Sciences and Technology Conference (65th, 2K07), in Japanese</span></span></div></li>
+      <li><span class="when">2021</span><div><span class="me-name">鈴木 聡宏</span>, 五十里 哲, 武者 満, 中須賀 真一. <span class="title">「音響光学偏向子を利用した編隊飛行衛星間の相対位置計測・制御手法」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第65回, P35）</span><span lang="en">Space Sciences and Technology Conference (65th, P35), in Japanese</span></span></div></li>
+    </ol>
+    <details class="more">
+      <summary><span lang="ja">共著 15 件</span><span lang="en">15 co-authored</span></summary>
+      <ol class="items">
+        <li><span class="when">2025</span><div>船曳 敦漠, …, <span class="me-name">鈴木 聡宏</span><span class="pos"><span lang="ja">（第 5 著者）</span><span lang="en"> (5th author)</span></span>. <span class="title">「6U汎用衛星バスの複数機製造および軌道上動作実績に関する報告」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第69回, 1A02）</span><span lang="en">Space Sciences and Technology Conference (69th, 1A02), in Japanese</span></span></div></li>
+        <li><span class="when">2025</span><div>土井 智文, …, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 10 著者）</span><span lang="en"> (10th author)</span></span>. <span class="title">「1Uサイズ超小型統合AOCSモジュールの実証」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第69回, 1A03）</span><span lang="en">Space Sciences and Technology Conference (69th, 1A03), in Japanese</span></span></div></li>
+        <li><span class="when">2025</span><div>坂本 優太, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 2 著者）</span><span lang="en"> (2nd author)</span></span>. <span class="title">「同時複数機開発・運用のDevOpsサイクル高速化のための取り組み」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第69回, 1A05）</span><span lang="en">Space Sciences and Technology Conference (69th, 1A05), in Japanese</span></span></div></li>
+        <li><span class="when">2025</span><div>村田 直史, …, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 11 著者）</span><span lang="en"> (11th author)</span></span>. <span class="title">「Comet Interceptorミッションでの彗星磁場観測に向けた超小型探査機の磁気管理・磁気試験状況」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第69回, 1B07）</span><span lang="en">Space Sciences and Technology Conference (69th, 1B07), in Japanese</span></span></div></li>
+        <li><span class="when">2025</span><div>草野 湧貴, …, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 8 著者）</span><span lang="en"> (8th author)</span></span>. <span class="title">「地上空間光通信実験DOLCEにおける光通信端末の開発と試験」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第69回, 4L18）</span><span lang="en">Space Sciences and Technology Conference (69th, 4L18), in Japanese</span></span></div></li>
+        <li><span class="when">2024</span><div>岡田 博嵩, …, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 5 著者）</span><span lang="en"> (5th author)</span></span>. <span class="title">「超小型人工衛星 ONGLAISAT の Time Delay Integration ミッションにおける目標姿勢の検討について」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第68回, 2N15）</span><span lang="en">Space Sciences and Technology Conference (68th, 2N15), in Japanese</span></span></div></li>
+        <li><span class="when">2024</span><div>生越 冴恵, …, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 6 著者）</span><span lang="en"> (6th author)</span></span>. <span class="title">「6U CubeSat ONGLAISAT の姿勢系開発に向けた HILS の改良」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第68回, 2N18）</span><span lang="en">Space Sciences and Technology Conference (68th, 2N18), in Japanese</span></span></div></li>
+        <li><span class="when">2024</span><div>藤原 正寛, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 2 著者）</span><span lang="en"> (2nd author)</span></span>. <span class="title">「Comet Interceptor B1 探査機における航法誘導制御系設計・開発状況」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第68回, 4L16）</span><span lang="en">Space Sciences and Technology Conference (68th, 4L16), in Japanese</span></span></div></li>
+        <li><span class="when">2023</span><div>関根 啓貴, …, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 5 著者）</span><span lang="en"> (5th author)</span></span>. <span class="title">「超小型衛星SPHERE-1 EYEにおける姿勢系の初期運用成果」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第67回, 2C15）</span><span lang="en">Space Sciences and Technology Conference (67th, 2C15), in Japanese</span></span></div></li>
+        <li><span class="when">2023</span><div>船瀬 龍, …, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 17 著者）</span><span lang="en"> (17th author)</span></span>. <span class="title">「SLS相乗り超小型探査機EQUULEUSの軌道上成果と将来展望」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第67回, 3N01）</span><span lang="en">Space Sciences and Technology Conference (67th, 3N01), in Japanese</span></span></div></li>
+        <li><span class="when">2023</span><div>中村 陸希, …, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 5 著者）</span><span lang="en"> (5th author)</span></span>. <span class="title">「EQUULEUS姿勢系の軌道上初期運用成果」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第67回, 3N11）</span><span lang="en">Space Sciences and Technology Conference (67th, 3N11), in Japanese</span></span></div></li>
+        <li><span class="when">2023</span><div>布施 綾太, …, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 11 著者）</span><span lang="en"> (11th author)</span></span>. <span class="title">「高推力推進系を有する超小型衛星GEO-Xのバスシステム検討状況」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第67回, 4N01）</span><span lang="en">Space Sciences and Technology Conference (67th, 4N01), in Japanese</span></span></div></li>
+        <li><span class="when">2022</span><div>五十里 哲, <span class="me-name">鈴木 聡宏</span>, 望月 友貴. <span class="title">「FF共通数値シミュレータにおけるDual Quaternionを用いた相対位置・姿勢センサ表現」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第66回, 1E17）</span><span lang="en">Space Sciences and Technology Conference (66th, 1E17), in Japanese</span></span></div></li>
+        <li><span class="when">2022</span><div>村田 直史, …, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 7 著者）</span><span lang="en"> (7th author)</span></span>. <span class="title">「Comet Interceptorミッションにおける超小型探査機を用いた磁場観測実現に向けた検討状況」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第66回, 1M07）</span><span lang="en">Space Sciences and Technology Conference (66th, 1M07), in Japanese</span></span></div></li>
+        <li><span class="when">2021</span><div>五十里 哲, <span class="me-name">鈴木 聡宏</span><span lang="ja"> 他</span><span lang="en"> et al.</span><span class="pos"><span lang="ja">（第 2 著者）</span><span lang="en"> (2nd author)</span></span>. <span class="title">「高精度フォーメーションフライト共通数値シミュレータの開発」</span><span class="venue"> — <span lang="ja">宇宙科学技術連合講演会（第65回, 2K11）</span><span lang="en">Space Sciences and Technology Conference (65th, 2K11), in Japanese</span></span></div></li>
+      </ol>
+    </details>
+
+    <h3><span lang="ja">受賞</span><span lang="en">Awards</span></h3>
+    <ol class="items">
+      <li><span class="when">2023</span><div><span class="title"><span lang="ja">若手奨励賞（優秀賞）</span><span lang="en">Young Researcher Award (Excellence)</span></span><span class="venue"> — <span lang="ja">第67回 宇宙科学技術連合講演会</span><span lang="en">67th Space Sciences and Technology Conference</span>「音響光学素子を利用した編隊飛行衛星間相対位置・計測手法に関する実験と検証」</span><span class="links"><a href="https://branch.jsass.or.jp/ukaren67/%e8%8b%a5%e6%89%8b%e5%a5%a8%e5%8a%b1%e8%b3%9e-%e5%8f%97%e8%b3%9e%e8%80%85/">Link</a></span></div></li>
+      <li><span class="when">2021</span><div><span class="title"><span lang="ja">学生優秀発表賞（優秀）</span><span lang="en">Student Outstanding Presentation Award</span></span><span class="venue"> — <span lang="ja">第65回 宇宙科学技術連合講演会</span><span lang="en">65th Space Sciences and Technology Conference</span>「音響光学偏向子を利用した編隊飛行衛星間の相対位置計測・制御手法」</span><span class="links"><a href="https://branch.jsass.or.jp/ukaren65/%e5%ad%a6%e7%94%9f%e5%84%aa%e7%a7%80%e7%99%ba%e8%a1%a8%e8%b3%9e%e2%98%86/">Link</a></span></div></li>
+    </ol>
+
+    <h3><span lang="ja">その他</span><span lang="en">Other</span></h3>
+    <ol class="items">
+      <li><span class="when">2024</span><div><span lang="ja">取材：</span><span lang="en">Interview: </span><span class="title">「小型衛星の開発推進　アークエッジ・スペース、基幹部品を国産化」</span><span class="venue"> — <span lang="ja">日本経済新聞</span><span lang="en">Nikkei (in Japanese)</span></span><span class="links"><a href="https://www.nikkei.com/article/DGXZQOUC208J10Q4A920C2000000/">Link</a></span></div></li>
+    </ol>
+  </section>
+
+  <footer>
+    <span>suzuki-toshihir0.github.io</span>
+    <span class="credit">Stars: Hipparcos Catalogue, Credit: ESA (<a href="https://creativecommons.org/licenses/by-nc/3.0/igo/">CC BY-NC 3.0 IGO</a>)</span>
+  </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,138 @@
+/* 配色: Catppuccin Mocha の一つだけ（明るい画面は用意しない） */
+:root {
+  color-scheme: dark;
+  --base: #1e1e2e; --mantle: #181825; --surface0: #313244; --surface1: #45475a;
+  --text: #cdd6f4; --subtext: #a6adc8; --overlay: #6c7086;
+  --link: #cba6f7; --crust: #11111b;
+  --c1: #f38ba8; --c2: #fab387; --c3: #f9e2af; --c4: #a6e3a1; --c5: #74c7ec; --c6: #b4befe;
+  --art-alpha: 0.6;
+  --green: #a6e3a1; --sat-body: var(--subtext);
+  --ax-x: #f38ba8; --ax-y: #a6e3a1; --ax-z: #89b4fa;
+  --sans: "M PLUS 1p", "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+html, body { min-height: 100%; }
+body {
+  background: var(--base); color: var(--text);
+  font-family: var(--sans); font-size: 16px; line-height: 1.85;
+  padding-inline: 16px; padding-block: 0;
+}
+#art { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: var(--art-alpha); }
+.page { position: relative; z-index: 1; max-width: 36rem; margin-inline: auto; padding-block: 72px 96px; display: grid; gap: 56px; }
+
+.me { display: grid; gap: 18px; }
+.avatar { width: 88px; height: 88px; border-radius: 50%; display: block; }
+.me h1 { margin: 0; font-size: 32px; line-height: 1.3; font-weight: 700; }
+.handle { font-family: var(--mono); font-size: 15px; }
+.handle a { color: var(--subtext); text-decoration: none; display: inline-flex; align-items: center; gap: 0.45em; }
+.handle a:hover { color: var(--text); text-decoration: underline; }
+.handle svg { width: 1em; height: 1em; fill: currentColor; flex: none; }
+.me p { margin: 0; }
+
+a { color: var(--link); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; border-radius: 2px; }
+
+
+/* 日本語と英語の両方を持ち、<html lang> と違う言語のほうを隠す */
+html[lang="ja"] [lang="en"], html[lang="en"] [lang="ja"] { display: none !important; }
+/* 右上の言語の切り替え */
+.langsw { position: fixed; top: calc(12px + env(safe-area-inset-top, 0px)); right: 16px; z-index: 4; display: flex; gap: 4px; align-items: center;
+  font: 12px/1 var(--mono); color: var(--overlay); background: rgb(24 24 37 / 0.7); border: 1px solid var(--surface0); border-radius: 999px; padding: 4px 8px; }
+.langsw button { font: inherit; cursor: pointer; background: none; border: 0; padding: 2px 4px; color: var(--overlay); }
+.langsw button[aria-pressed="true"] { color: var(--text); }
+.langsw button:hover { color: var(--subtext); }
+/* 興味のあるもの: neofetch のように、項目名と中身を 2 列に並べる */
+.fetch { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 2px 14px; font: 13px/1.7 var(--mono); }
+.fetch dt { color: var(--green); }
+.fetch dd { margin: 0; color: var(--subtext); }
+section h2 { margin: 0 0 14px; font-size: 14px; letter-spacing: 0.08em; color: var(--subtext); font-weight: 700; }
+.posts { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.posts li { display: grid; grid-template-columns: 6.5em 1fr; gap: 12px; align-items: baseline; }
+.posts time { font: 13px var(--mono); color: var(--overlay); font-variant-numeric: tabular-nums; }
+.posts a { color: var(--text); text-decoration-color: var(--surface0); }
+.posts a:hover { color: var(--link); text-decoration-color: currentColor; }
+@media (max-width: 480px) { .posts li { grid-template-columns: 1fr; gap: 0; } }
+/* 経歴: 縦線と点の年表（x56.jp の年表を参考に）。今も続いているものは点を緑に */
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.timeline li { display: grid; grid-template-columns: 6.5em 1fr; gap: 12px; align-items: baseline; }
+.timeline .what { position: relative; padding-left: 18px; border-left: 1px solid var(--surface0); padding-bottom: 2px; }
+.timeline .what::before { content: ""; position: absolute; left: -4px; top: 0.65em; width: 7px; height: 7px; border-radius: 50%; background: var(--overlay); }
+.timeline li.now .what::before { background: var(--green); }
+.timeline .org { color: var(--text); }
+.sub { display: block; color: var(--subtext); font-size: 14px; }
+.when { font: 13px var(--mono); color: var(--overlay); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* 成果: 種類ごとの小見出しと、年＋中身の一覧 */
+section h3 { margin: 22px 0 10px; font: 600 13px var(--mono); color: var(--overlay); }
+section h2 + h3 { margin-top: 0; }
+.items { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.items li { display: grid; grid-template-columns: 6.5em 1fr; gap: 12px; align-items: baseline; }
+.items .me-name { color: var(--text); font-weight: 700; }
+.items .pos { color: var(--overlay); font-size: 12px; }
+.items .title { color: var(--text); }
+.items .venue { color: var(--subtext); font-size: 14px; }
+.items .links { font: 12px var(--mono); margin-left: 6px; }
+.items .links a { margin-right: 8px; }
+details.more { margin-top: 10px; }
+details.more summary { cursor: pointer; font: 12px var(--mono); color: var(--overlay); list-style: none; }
+details.more summary::before { content: "▸ "; }
+details.more[open] summary::before { content: "▾ "; }
+details.more .items { margin-top: 12px; }
+@media (max-width: 480px) { .timeline li, .items li { grid-template-columns: 1fr; gap: 2px; } }
+.note { font-size: 12px; color: var(--overlay); margin: 12px 0 0; }
+
+footer { font: 12px var(--mono); color: var(--overlay); display: flex; gap: 6px 16px; flex-wrap: wrap; align-items: center; }
+footer .credit, footer .credit a { color: var(--overlay); font-size: 11px; }
+
+.caret { color: var(--green); font: inherit; font-family: var(--mono); font-weight: 600; margin: 0 0.35em 0 0; padding: 0; background: none; border: 0; cursor: pointer; }
+.caret:hover, .caret[aria-expanded="true"] { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0.2; } }
+@media (prefers-reduced-motion: reduce) { .caret:hover, .caret[aria-expanded="true"] { animation: none; text-decoration: underline; } }
+
+/* 隠しの planner（alsamixer 風のバーでカメラを向ける方向を決める） */
+/* 名前の下に、コマンドの出力のようにその場で開く */
+.mix { display: grid; margin: 10px 0 6px;
+  font: 12px/1.15 var(--mono); color: var(--text);
+  background: rgb(17 17 27 / 0.5); border: 1px solid var(--surface0); border-radius: 8px; overflow: hidden; user-select: none; }
+.mix[hidden] { display: none; }
+.mix .cmd { padding: 8px 12px 0; color: var(--subtext); }
+.mix .cmd .p-car { color: var(--green); }
+.mix:focus { outline: none; }
+.mix .bar { display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: rgb(24 24 37 / 0.7); color: var(--overlay); font-size: 12px; }
+.mix .bar .title { flex: 1; }
+.mix .bar .cmd-line { color: var(--subtext); }
+.mix .bar .p-car { color: var(--green); }
+.mix .bar button { font: inherit; cursor: pointer; color: var(--overlay); background: none; border: 0; padding: 0 4px; }
+.mix .bar button:hover { color: var(--text); }
+.mix .head { padding: 8px 14px 4px; white-space: pre; color: var(--subtext); font-size: 12px; line-height: 1.5; overflow-x: auto; }
+.mix .head b { color: var(--c3); font-weight: 400; }
+/* tmux の左右分割のように: 左の区画がバー、右の区画が RW の回転数の時間履歴。狭い画面では上下に分ける。
+   各区画は ratatui の Block のように枠で囲み、題名を枠の上辺に埋め込む */
+.mix .panes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 12px 12px 12px; }
+.mix .pane { position: relative; border: 1px solid var(--surface1); border-radius: 2px; min-width: 0; }
+.mix .target { display: flex; flex-direction: column; }
+.mix .target .head { padding: 12px 12px 0; }
+.mix .target .cols { flex: 1; align-items: center; }
+.mix .pane-title { position: absolute; top: -0.75em; left: 8px; padding: 0 4px; background: var(--crust); font: 11px/1.4 var(--mono); color: var(--subtext); }
+.mix .cols { display: flex; justify-content: center; gap: 28px; padding: 14px 18px 12px; }
+.mix .hist { display: flex; flex-direction: column; gap: 4px; padding: 12px 10px 10px; }
+.mix .hist canvas { display: block; width: 100%; flex: 1; min-height: 150px; touch-action: none; }
+@media (max-width: 560px) {
+  .mix .panes { grid-template-columns: 1fr; gap: 14px; }
+  .mix .hist canvas { flex: none; height: 150px; }
+}
+.mix .hist-read { font: 11px/1.4 var(--mono); color: var(--overlay); min-height: 1.4em; white-space: pre; overflow: hidden; }
+.mix .ch { display: grid; justify-items: center; gap: 2px; }
+/* バー: 枠の中央を 0 とし、正は上へ、負は下へ連続して伸ばす。1500 rpm ごとに枠の内側に短い目盛り */
+.mix .col { position: relative; width: 44px; height: 200px; border: 1px solid var(--overlay); cursor: ns-resize; touch-action: none; }
+.mix .col .zero { position: absolute; left: 0; right: 0; top: 50%; border-top: 1px solid var(--overlay); }
+.mix .col .tick { position: absolute; right: 0; width: 6px; border-top: 1px solid var(--overlay); }
+.mix .col .fill { position: absolute; left: 4px; right: 10px; height: 0; background: var(--c); }
+.mix .ch[data-ax="ra"] .col { --c: var(--c5); } .mix .ch[data-ax="dec"] .col { --c: var(--c2); }
+/* 目標の印: バーの右外に置く小さな三角 */
+.mix .col .tgt { position: absolute; left: 100%; width: 7px; height: 8px; margin: -4px 0 0 4px; background: var(--text); clip-path: polygon(100% 0, 0 50%, 100% 100%); }
+.mix .col .tgt[hidden] { display: none; }
+.mix .ch[data-ax="ra"] .name { color: var(--c5); } .mix .ch[data-ax="dec"] .name { color: var(--c2); }
+.mix .val { font-variant-numeric: tabular-nums; white-space: pre; }
+.mix .name { padding: 0 6px; color: var(--subtext); }
