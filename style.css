@@ -40,6 +40,7 @@ body {
 .handle .li { gap: 0.6em; }
 .handle .li img { display: block; height: 1em; width: auto; flex: none; }
 .me p { margin: 0; }
+.me .role { margin: 2px 0 10px; }
 
 a { color: var(--link); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover { text-decoration-thickness: 2px; }
