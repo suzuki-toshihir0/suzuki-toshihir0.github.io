@@ -192,3 +192,78 @@ describe("背景", () => {
     await page.close();
   });
 });
+
+// ---- フォント: Google Fonts を使わず、使う文字だけを切り出したフォントを同梱する（tools/fonts/ で作る） ----
+// CDP の CSS.getPlatformFontsForNode で、各要素の文字を実際にどのフォントで描いたかを調べる
+async function platformFonts(page) {
+  const cdp = await page.createCDPSession();
+  await cdp.send("DOM.enable"); await cdp.send("CSS.enable");
+  const { root } = await cdp.send("DOM.getDocument", { depth: -1 });
+  const { nodeIds } = await cdp.send("DOM.querySelectorAll", { nodeId: root.nodeId, selector: "body *" });
+  const out = [];
+  for (const id of nodeIds) {
+    const { fonts } = await cdp.send("CSS.getPlatformFontsForNode", { nodeId: id });
+    if (!fonts.length) continue;
+    const { outerHTML } = await cdp.send("DOM.getOuterHTML", { nodeId: id });
+    out.push({ html: outerHTML.replace(/\s+/g, " ").slice(0, 100), fonts });
+  }
+  await cdp.detach();
+  return out;
+}
+// planner を開き、共著の一覧も開いて、描画の更新を止める（調べている間に要素が作り直されないように）
+async function openAll(page) {
+  await page.click("#caret");
+  await new Promise((r) => setTimeout(r, 300));
+  await page.evaluate(async () => {
+    document.querySelectorAll("details").forEach((d) => (d.open = true));
+    window.requestAnimationFrame = () => 0;
+    await document.fonts.ready;
+  });
+  await new Promise((r) => setTimeout(r, 200));
+}
+
+describe("フォント", () => {
+  test("外部のサーバーに一切つながらない", async () => {
+    const { page, responses, failed } = await open();
+    await openAll(page);
+    const ext = [...responses.map((r) => r.url), ...failed].filter((u) => !u.startsWith(srv.url) && !u.startsWith("data:"));
+    assert.deepEqual(ext, []);
+    await page.close();
+  });
+  for (const lang of ["ja", "en"]) {
+    test(`画面の文字はすべて同梱のフォントで描く（${lang}、planner と共著の一覧を開いた状態）`, async () => {
+      const { page } = await open({ lang });
+      await openAll(page);
+      const nodes = await platformFonts(page);
+      const bad = nodes.filter((n) => n.fonts.some((f) => !f.isCustomFont))
+        .map((n) => `${n.fonts.filter((f) => !f.isCustomFont).map((f) => `${f.familyName}×${f.glyphCount}`).join(", ")} ← ${n.html}`);
+      assert.deepEqual(bad, [], "同梱のフォントに無い文字がある（npm run fonts で作り直す）");
+      const used = new Set(nodes.flatMap((n) => n.fonts.map((f) => f.postScriptName)));
+      for (const ps of ["MPLUS1p-Regular", "MPLUS1p-Bold", "JetBrainsMono-Regular"]) assert.ok(used.has(ps), `${ps} が使われていない: ${[...used]}`);
+      await page.close();
+    });
+  }
+  test("CSS の content と、グラフ（canvas）に描く文字も同梱のフォントにある", async () => {
+    const { page } = await open();
+    await page.evaluate(async () => {
+      // ▸▾ は共著の一覧の開閉、それ以外はグラフの目盛り・凡例と、planner の値に出る文字
+      const s = document.createElement("span");
+      s.id = "glyph-probe"; s.style.fontFamily = "var(--mono)";
+      s.textContent = "▸▾−+°′→✕❯0123456789 hmsagonowXYZ";
+      document.body.appendChild(s);
+      await document.fonts.ready;
+    });
+    const nodes = await platformFonts(page);
+    const probe = nodes.find((n) => n.html.includes("glyph-probe"));
+    assert.ok(probe, "調べる要素が見つからない");
+    assert.deepEqual(probe.fonts.filter((f) => !f.isCustomFont).map((f) => f.familyName), []);
+    await page.close();
+  });
+  test("同梱したフォントのライセンス文（SIL Open Font License）がある", () => {
+    for (const f of ["fonts/OFL-MPLUS1p.txt", "fonts/OFL-JetBrainsMono.txt"]) {
+      const p = path.join(ROOT, f);
+      assert.ok(fs.existsSync(p), `${f} が無い`);
+      assert.match(fs.readFileSync(p, "utf8"), /SIL Open Font License, Version 1\.1/);
+    }
+  });
+});
