@@ -314,3 +314,25 @@ describe("LinkedIn へのリンク", () => {
     await page.close();
   });
 });
+
+describe("名刺の並び", () => {
+  test("名前の直下に肩書き（Spacecraft Engineer）、その下に GitHub、LinkedIn の順に並ぶ", async () => {
+    const { page } = await open();
+    const r = await page.evaluate(() => {
+      const top = (el) => el.getBoundingClientRect().top, bottom = (el) => el.getBoundingClientRect().bottom;
+      const h1 = document.querySelector(".me h1");
+      const role = [...document.querySelectorAll(".me p")].find((p) => p.textContent.trim() === "Spacecraft Engineer");
+      const gh = [...document.querySelectorAll("a")].find((a) => a.href === "https://github.com/suzuki-toshihir0");
+      const li = [...document.querySelectorAll("a")].find((a) => a.href === "https://www.linkedin.com/in/suzuki-toshihir0/");
+      if (!h1 || !role || !gh || !li) return null;
+      // 名前と肩書きの間に、見えている別の要素が挟まっていない
+      const between = [...document.querySelectorAll(".me *")].filter((e) => e.offsetParent !== null && !h1.contains(e) && !role.contains(e) && !e.contains(role) && !e.contains(h1)
+        && top(e) >= bottom(h1) - 1 && bottom(e) <= top(role) + 1 && e.getBoundingClientRect().height > 0);
+      return { order: bottom(h1) <= top(role) + 1 && bottom(role) <= top(gh) + 1 && bottom(gh) <= top(li) + 1, between: between.map((e) => e.tagName + "." + e.className) };
+    });
+    assert.ok(r, "名前・肩書き・リンクのどれかが見つからない");
+    assert.ok(r.order, "名前 → 肩書き → GitHub → LinkedIn の順になっていない");
+    assert.deepEqual(r.between, [], "名前と肩書きの間に別の要素がある");
+    await page.close();
+  });
+});
