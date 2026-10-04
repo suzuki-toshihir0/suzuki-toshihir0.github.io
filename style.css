@@ -34,6 +34,10 @@ body {
 .handle a { color: var(--subtext); text-decoration: none; display: inline-flex; align-items: center; gap: 0.45em; }
 .handle a:hover { color: var(--text); text-decoration: underline; }
 .handle svg { width: 1em; height: 1em; fill: currentColor; flex: none; }
+/* LinkedIn の [in] ロゴ: 公式の白をそのまま使う（https://brand.linkedin.com/in-logo）。色・形を変えず、文字と組み合わせず、周りに余白を取る */
+.handle { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 1.4em; }
+.handle .li { display: inline-flex; padding: 2px; }
+.handle .li img { display: block; height: 1em; width: auto; }
 .me p { margin: 0; }
 
 a { color: var(--link); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
