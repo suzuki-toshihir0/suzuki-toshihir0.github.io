@@ -30,7 +30,7 @@ async function measure(page, open) {
       if (b.right > W + 0.5 || b.left < -0.5) f.push(`${name(el)} が画面からはみ出す（left ${b.left.toFixed(1)}, right ${b.right.toFixed(1)}, 幅 ${W}）`);
     }
     // 4. 文字が入れ物からはみ出さない（横方向）
-    for (const el of document.querySelectorAll(".me h1, .handle, .fetch dd, .posts li, .timeline .what, .items li > div, .mix .head, .mix .val, .mix .name, .mix .pane-title, .langsw")) {
+    for (const el of document.querySelectorAll(".me h1, .handle, .fetch dd, .posts li, .posts time, .when, .timeline .what, .items li > div, .mix .head, .mix .val, .mix .name, .mix .pane-title, .langsw")) {
       if (!vis(el)) continue;
       if (el.scrollWidth > el.clientWidth + 1) f.push(`${name(el)} の文字がはみ出す（${el.scrollWidth} > ${el.clientWidth}）「${el.textContent.trim().slice(0, 30)}」`);
     }
