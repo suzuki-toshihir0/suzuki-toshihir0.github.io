@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "node --test --test-reporter=spec test/*.test.js",
-    "serve": "node test/server.js"
+    "serve": "node test/server.js",
+    "fonts": "node tools/fonts/chars.mjs && nix-shell -p python3Packages.fonttools python3Packages.brotli --run 'python3 tools/fonts/build.py'"
   },
   "devDependencies": {
     "fast-check": "^4.10.2",

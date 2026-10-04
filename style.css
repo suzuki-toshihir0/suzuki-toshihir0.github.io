@@ -1,3 +1,9 @@
+/* フォント: ページで使う文字だけを切り出して同梱する（tools/fonts/ で作る。文字を足したら npm run fonts）。
+   M PLUS 1p と JetBrains Mono はどちらも SIL Open Font License 1.1（fonts/OFL-*.txt） */
+@font-face { font-family: "M PLUS 1p"; font-weight: 400; font-display: swap; src: url("fonts/mplus1p-400.woff2") format("woff2"); }
+@font-face { font-family: "M PLUS 1p"; font-weight: 700; font-display: swap; src: url("fonts/mplus1p-700.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400 600; font-display: swap; src: url("fonts/jetbrainsmono.woff2") format("woff2"); }
+
 /* 配色: Catppuccin Mocha の一つだけ（明るい画面は用意しない） */
 :root {
   color-scheme: dark;
@@ -9,7 +15,7 @@
   --green: #a6e3a1; --sat-body: var(--subtext);
   --ax-x: #f38ba8; --ax-y: #a6e3a1; --ax-z: #89b4fa;
   --sans: "M PLUS 1p", "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --mono: "JetBrains Mono", "M PLUS 1p", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
 
 html, body { min-height: 100%; }
