@@ -268,22 +268,29 @@ describe("フォント", () => {
   });
 });
 
-// ---- LinkedIn へのリンク: LinkedIn の規定（https://brand.linkedin.com/in-logo）に沿って、公式の白の [in] ロゴだけを置く ----
+// ---- LinkedIn へのリンク: LinkedIn の規定（https://brand.linkedin.com/in-logo）に沿って、公式の白の [in] ロゴを色・形を変えずに使う。
+// 文字はロゴと一体にせず、余白を空けて横に並べる（規定の「よい使い方」の例に、ロゴの横に "View my LinkedIn Profile" と並べたものがある）
 describe("LinkedIn へのリンク", () => {
   const URL_ = "https://www.linkedin.com/in/suzuki-toshihir0/";
-  test("プロフィールへのリンクがあり、中身は [in] ロゴの画像だけ（文字と組み合わせない）", async () => {
+  test("GitHub の行の下に、[in] ロゴと「in/suzuki-toshihir0」を並べたリンクがある", async () => {
     const { page } = await open();
     const r = await page.evaluate((u) => {
       const a = [...document.querySelectorAll("a")].find((a) => a.href === u);
-      if (!a) return null;
-      const img = a.querySelector("img");
-      return { text: a.textContent.trim(), label: a.getAttribute("aria-label"), imgs: a.querySelectorAll("img").length, others: a.querySelectorAll("svg, span").length, alt: img && img.getAttribute("alt") };
+      const gh = [...document.querySelectorAll("a")].find((a) => a.href === "https://github.com/suzuki-toshihir0");
+      if (!a || !gh) return null;
+      const img = a.querySelector("img"), ib = img.getBoundingClientRect(), ab = a.getBoundingClientRect(), gb = gh.getBoundingClientRect();
+      const text = a.textContent.trim();
+      // 文字の左端（ロゴとの間の余白を測る）
+      const range = document.createRange(); const tn = [...a.childNodes].map((n) => n.nodeType === 3 ? n : n.firstChild).find((n) => n && n.nodeType === 3 && n.textContent.trim());
+      range.selectNodeContents(tn); const tb = range.getBoundingClientRect();
+      return { text, imgs: a.querySelectorAll("img").length, svgs: a.querySelectorAll("svg").length, below: ab.top >= gb.bottom - 1, gap: tb.left - ib.right, logoH: ib.height };
     }, URL_);
-    assert.ok(r, `${URL_} へのリンクが無い`);
+    assert.ok(r, "LinkedIn か GitHub へのリンクが無い");
+    assert.equal(r.text, "in/suzuki-toshihir0");
     assert.equal(r.imgs, 1);
-    assert.equal(r.others, 0);
-    assert.equal(r.text, "");
-    assert.ok(r.label || r.alt, "読み上げ用の名前が無い");
+    assert.equal(r.svgs, 0);
+    assert.ok(r.below, "GitHub の行の下にない");
+    assert.ok(r.gap >= r.logoH * 0.4, `ロゴと文字の間の余白が狭い（${r.gap.toFixed(1)}px、ロゴの高さ ${r.logoH.toFixed(1)}px）`);
     await page.close();
   });
   test("ロゴは縦横比を保ち、色は白のまま（形と色を変えない）", async () => {
