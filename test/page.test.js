@@ -267,3 +267,43 @@ describe("フォント", () => {
     }
   });
 });
+
+// ---- LinkedIn へのリンク: LinkedIn の規定（https://brand.linkedin.com/in-logo）に沿って、公式の白の [in] ロゴだけを置く ----
+describe("LinkedIn へのリンク", () => {
+  const URL_ = "https://www.linkedin.com/in/suzuki-toshihir0/";
+  test("プロフィールへのリンクがあり、中身は [in] ロゴの画像だけ（文字と組み合わせない）", async () => {
+    const { page } = await open();
+    const r = await page.evaluate((u) => {
+      const a = [...document.querySelectorAll("a")].find((a) => a.href === u);
+      if (!a) return null;
+      const img = a.querySelector("img");
+      return { text: a.textContent.trim(), label: a.getAttribute("aria-label"), imgs: a.querySelectorAll("img").length, others: a.querySelectorAll("svg, span").length, alt: img && img.getAttribute("alt") };
+    }, URL_);
+    assert.ok(r, `${URL_} へのリンクが無い`);
+    assert.equal(r.imgs, 1);
+    assert.equal(r.others, 0);
+    assert.equal(r.text, "");
+    assert.ok(r.label || r.alt, "読み上げ用の名前が無い");
+    await page.close();
+  });
+  test("ロゴは縦横比を保ち、色は白のまま（形と色を変えない）", async () => {
+    const { page } = await open();
+    const r = await page.evaluate(async (u) => {
+      const img = [...document.querySelectorAll("a")].find((a) => a.href === u).querySelector("img");
+      await img.decode();
+      const b = img.getBoundingClientRect();
+      const c = document.createElement("canvas");
+      c.width = img.naturalWidth; c.height = img.naturalHeight;
+      const ctx = c.getContext("2d"); ctx.drawImage(img, 0, 0);
+      const d = ctx.getImageData(0, 0, c.width, c.height).data;
+      let opaque = 0, nonWhite = 0;
+      for (let i = 0; i < d.length; i += 4) if (d[i + 3] > 200) { opaque++; if (d[i] < 245 || d[i + 1] < 245 || d[i + 2] < 245) nonWhite++; }
+      return { natural: img.naturalWidth / img.naturalHeight, shown: b.width / b.height, h: b.height, opaque, nonWhite, filter: getComputedStyle(img).filter, opacity: getComputedStyle(img).opacity };
+    }, URL_);
+    assert.ok(Math.abs(r.shown / r.natural - 1) < 0.03, `縦横比が変わっている（元 ${r.natural.toFixed(3)}、表示 ${r.shown.toFixed(3)}）`);
+    assert.ok(r.h >= 12, `小さすぎる（${r.h}px）`);
+    assert.ok(r.opaque > 0 && r.nonWhite === 0, `白でない画素がある（${r.nonWhite}/${r.opaque}）`);
+    assert.equal(r.filter, "none");
+    await page.close();
+  });
+});
