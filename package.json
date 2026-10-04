@@ -1,0 +1,14 @@
+{
+  "name": "suzuki-toshihir0.github.io",
+  "private": true,
+  "description": "個人サイトのテスト: 姿勢制御の PBT（fast-check）と、ページの体裁・画面の幅ごとの表示のテスト（puppeteer-core）",
+  "type": "module",
+  "scripts": {
+    "test": "node --test --test-reporter=spec test/*.test.js",
+    "serve": "node test/server.js"
+  },
+  "devDependencies": {
+    "fast-check": "^4.10.2",
+    "puppeteer-core": "^25.12.0"
+  }
+}
