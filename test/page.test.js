@@ -9,7 +9,7 @@ import puppeteer from "puppeteer-core";
 import { serve, CHROME } from "./server.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SITE = "https://suzuki-toshihir0.github.io/";
+const SITE = "https://suzuki-toshihiro.dev/";
 const isFont = (u) => /fonts\.(googleapis|gstatic)\.com/.test(u);
 
 let srv, browser;
@@ -333,6 +333,17 @@ describe("名刺の並び", () => {
     assert.ok(r, "名前・肩書き・リンクのどれかが見つからない");
     assert.ok(r.order, "名前 → 肩書き → GitHub → LinkedIn の順になっていない");
     assert.deepEqual(r.between, [], "名前と肩書きの間に別の要素がある");
+    await page.close();
+  });
+});
+
+describe("独自ドメイン", () => {
+  test("GitHub Pages の CNAME ファイルが suzuki-toshihiro.dev を指す", () => {
+    assert.equal(fs.readFileSync(path.join(ROOT, "CNAME"), "utf8").trim(), "suzuki-toshihiro.dev");
+  });
+  test("ページの下にサイトのドメインを表示する", async () => {
+    const { page } = await open();
+    assert.match(await page.$eval("footer", (e) => e.innerText), /suzuki-toshihiro\.dev/);
     await page.close();
   });
 });
