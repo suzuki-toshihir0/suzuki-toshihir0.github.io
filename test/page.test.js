@@ -347,3 +347,34 @@ describe("独自ドメイン", () => {
     await page.close();
   });
 });
+
+describe("学位論文の題目", () => {
+  // 経歴の各学位の下に題目を出す。英語の題目があるのは博士論文だけなので、修士・学士は英語の画面でも日本語の原題を出す
+  const want = {
+    ja: [
+      "博士論文「因子グラフに基づく高精度宇宙機編隊飛行航法に関する研究」",
+      "修士論文「音響光学素子を利用した編隊飛行衛星間の高精度相対航法・誘導・制御に関する研究」",
+      "卒業論文「音響光学偏向子を利用した編隊飛行衛星間の相対位置計測・制御手法に関する研究」",
+    ],
+    en: [
+      "Doctoral dissertation: “Factor Graph Approaches to High-Precision Navigation for Spacecraft Formation Flying”",
+      "Master's thesis (in Japanese): 「音響光学素子を利用した編隊飛行衛星間の高精度相対航法・誘導・制御に関する研究」",
+      "Bachelor's thesis (in Japanese): 「音響光学偏向子を利用した編隊飛行衛星間の相対位置計測・制御手法に関する研究」",
+    ],
+  };
+  for (const lang of ["ja", "en"]) {
+    test(`${lang}: 博士・修士・学士の行に、それぞれの題目が見える`, async () => {
+      const { page } = await open({ lang });
+      const got = await page.evaluate(() => [...document.querySelectorAll("#career .timeline li")]
+        .map((li) => li.querySelector(".thesis")).filter(Boolean).map((e) => e.innerText.replace(/\s+/g, " ").trim()));
+      assert.deepEqual(got, want[lang]);
+      await page.close();
+    });
+  }
+  test("日本語の原題には lang 属性で日本語であることを示す（英語の画面で隠されない値にする）", async () => {
+    const { page } = await open({ lang: "en" });
+    const langs = await page.evaluate(() => [...document.querySelectorAll("#career .thesis .title-ja")].map((e) => e.lang));
+    assert.deepEqual(langs, ["ja-JP", "ja-JP"]);
+    await page.close();
+  });
+});
