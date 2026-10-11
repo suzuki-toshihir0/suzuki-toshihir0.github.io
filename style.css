@@ -76,7 +76,7 @@ section h2 { margin: 0 0 14px; font-size: 14px; letter-spacing: 0.08em; color: v
 /* 期間（2023.10 – 2026.09）は日付の列に収まらないので、「–」のあとで折り返して 2 行にする（列の幅は記事・成果の欄とそろえたまま） */
 .timeline .when { white-space: normal; }
 .sub { display: block; color: var(--subtext); font-size: 14px; }
-/* 学位論文の題目。英語の題目が無い修士・学士は、英語の画面でも日本語の原題を出す。
+/* 学位論文の題目。本文はどれも日本語なので、英語の画面では (in Japanese) を添える。英語の題目が無い修士・学士は、英語の画面でも日本語の原題を出す。
    原題の lang は "ja" ではなく "ja-JP" にする（[lang="ja"] は英語の画面で隠す対象のため） */
 .thesis { display: block; color: var(--subtext); font-size: 13px; margin-top: 2px; }
 .when { font: 13px var(--mono); color: var(--overlay); font-variant-numeric: tabular-nums; white-space: nowrap; }
