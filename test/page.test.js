@@ -349,7 +349,8 @@ describe("独自ドメイン", () => {
 });
 
 describe("学位論文の題目", () => {
-  // 経歴の各学位の下に題目を出す。英語の題目があるのは博士論文だけなので、修士・学士は英語の画面でも日本語の原題を出す
+  // 経歴の各学位の下に題目を出す。本文はどれも日本語なので、英語の画面では (in Japanese) を添える。
+  // 英語の題目があるのは博士論文だけなので、修士・学士は英語の画面でも日本語の原題を出す
   const want = {
     ja: [
       "博士論文「因子グラフに基づく高精度宇宙機編隊飛行航法に関する研究」",
@@ -357,7 +358,7 @@ describe("学位論文の題目", () => {
       "卒業論文「音響光学偏向子を利用した編隊飛行衛星間の相対位置計測・制御手法に関する研究」",
     ],
     en: [
-      "Doctoral dissertation: “Factor Graph Approaches to High-Precision Navigation for Spacecraft Formation Flying”",
+      "Doctoral dissertation (in Japanese): “Factor Graph Approaches to High-Precision Navigation for Spacecraft Formation Flying”",
       "Master's thesis (in Japanese): 「音響光学素子を利用した編隊飛行衛星間の高精度相対航法・誘導・制御に関する研究」",
       "Bachelor's thesis (in Japanese): 「音響光学偏向子を利用した編隊飛行衛星間の相対位置計測・制御手法に関する研究」",
     ],
